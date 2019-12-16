@@ -59,7 +59,7 @@ public class GameLogic
         ball.setY((int) ball.getY() + ball.getyDir());
     }
 
-    boolean isIntersecting(GameObject objectA, GameObject objectB)
+    private boolean isIntersecting(GameObject objectA, GameObject objectB)
     {
         return objectA.right() >= objectB.left() && objectA.left() <= objectB.right()
                 && objectA.bottom() >= objectB.top() && objectA.top() <= objectB.bottom();
@@ -85,12 +85,12 @@ public class GameLogic
         }
     }
 
-    public boolean brickExists(int row, int col)
+    private boolean brickExists(int row, int col)
     {
         return bricks.getMap()[row][col] == 1;
     }
 
-    public void checkCollision(int row, int col, int brickX, int brickY)
+    private void checkCollision(int row, int col, int brickX, int brickY)
     {
         boolean overlapRight = ball.getX() + BALL_RADIUS >= brickX;
         boolean overlapLeft = ball.getX() + BALL_RADIUS <= brickX + BRICKS_WIDTH + 15;
@@ -106,7 +106,7 @@ public class GameLogic
 
     }
 
-    public void invertBallAfterCollision(int row, int col, int brickX, int brickY)
+    private void invertBallAfterCollision(int row, int col, int brickX, int brickY)
     {
         boolean collideRight = ball.getX() + BALL_RADIUS <= brickX;
         boolean collideLeft = ball.getX() + BALL_RADIUS >= brickX + BRICKS_WIDTH + 15;
@@ -118,7 +118,7 @@ public class GameLogic
         }
     }
 
-    public void countScore()
+    private void countScore()
     {
         score += 10;
     }

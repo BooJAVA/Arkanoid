@@ -16,7 +16,7 @@ public class DrawGame
         this.paddle = paddle;
     }
 
-    void drawAllElements(Graphics2D g, int score)
+    public void drawAllElements(Graphics2D g, int score)
     {
         drawBackground(g);
         drawBorders(g);
@@ -26,13 +26,13 @@ public class DrawGame
         drawPaddle(g);
     }
 
-    void drawBackground (Graphics g)
+    private void drawBackground (Graphics g)
     {
         g.setColor(Color.black);
         g.fillRect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
-    void drawBorders (Graphics g)
+    private void drawBorders (Graphics g)
     {
         g.setColor(Color.yellow);
         g.fillRect(0,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
@@ -40,19 +40,19 @@ public class DrawGame
         g.fillRect(SCREEN_WIDTH - BORDER_WIDTH - 15,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
     }
 
-    void drawBall(Graphics g)
+    private void drawBall(Graphics g)
     {
         g.setColor(Color.green);
         g.fillOval((int) ball.getX(),(int) ball.getY(), BALL_RADIUS, BALL_RADIUS);
     }
 
-    void drawPaddle (Graphics g)
+    private void drawPaddle (Graphics g)
     {
         g.setColor(Color.green);
         g.fillRect((int) paddle.getX(), PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
-    void drawBricks(Graphics2D g)
+    private void drawBricks(Graphics2D g)
     {
         for (int i = 0; i < bricks.getMapHeight(); i++)
         {
@@ -70,14 +70,14 @@ public class DrawGame
         }
     }
 
-    void drawScore (Graphics g, int score)
+    private void drawScore (Graphics g, int score)
     {
         g.setColor(Color.green);
         g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
         g.drawString(""+score, SCORE_TEXT_X, SCORE_TEXT_Y);
     }
 
-    void drawGameOver (Graphics g, int score)
+    public void drawGameOver (Graphics g, int score)
     {
         g.setColor(Color.red);
         g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
@@ -86,7 +86,7 @@ public class DrawGame
         g.drawString("Press ENTER to play again", ENTER_TEXT_X, ENTER_TEXT_Y);
     }
 
-    void drawGameWon (Graphics g, int score)
+    public void drawGameWon (Graphics g, int score)
     {
         g.setColor(Color.red);
         g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
