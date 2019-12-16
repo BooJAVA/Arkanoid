@@ -73,26 +73,26 @@ public class DrawGame
     void drawScore (Graphics g, int score)
     {
         g.setColor(Color.green);
-        g.setFont(new Font(FONT, Font.BOLD, 25));
-        g.drawString(""+score, 590, 30);
+        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
+        g.drawString(""+score, SCORE_TEXT_X, SCORE_TEXT_Y);
     }
 
     void drawGameOver (Graphics g, int score)
     {
         g.setColor(Color.red);
-        g.setFont(new Font(FONT, Font.BOLD, 30));
-        g.drawString("Game over! Score : "+score, 200, 300);
-        g.setFont(new Font(FONT, Font.BOLD, 30));
-        g.drawString("Press ENTER to play again", 170, 340);
+        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
+        g.drawString("Game over! Score : "+score, TEXT_X, TEXT_Y);
+        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
+        g.drawString("Press ENTER to play again", ENTER_TEXT_X, ENTER_TEXT_Y);
     }
 
     void drawGameWon (Graphics g, int score)
     {
         g.setColor(Color.red);
-        g.setFont(new Font(FONT, Font.BOLD, 30));
-        g.drawString("You won! Score : "+score, 200, 300);
-        g.setFont(new Font(FONT, Font.BOLD, 30));
-        g.drawString("Press ENTER to play again", 170, 340);
+        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
+        g.drawString("You won! Score : "+score, TEXT_X, TEXT_Y);
+        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
+        g.drawString("Press ENTER to play again", ENTER_TEXT_X, ENTER_TEXT_Y);
     }
 
 

@@ -20,7 +20,15 @@ public class Constants
     public static final int BRICKS_ROW = 3;
     public static final int BRICKS_COL = 7;
 
+    public static final int SCORE_TEXT_X = 590;
+    public static final int SCORE_TEXT_Y = 40;
+    public static final int TEXT_X = 200;
+    public static final int TEXT_Y = 300;
+    public static final int ENTER_TEXT_X = 170;
+    public static final int ENTER_TEXT_Y = 340;
+
     public static final String FONT = "LucidaSans";
+    public static final int FONTSIZE = 30;
 
 
 
