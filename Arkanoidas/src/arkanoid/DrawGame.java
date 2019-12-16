@@ -35,9 +35,9 @@ public class DrawGame
     void drawBorders (Graphics g)
     {
         g.setColor(Color.yellow);
-        g.fillRect(0,0,3,SCREEN_HEIGHT - 8);
-        g.fillRect(0,0,SCREEN_WIDTH - 8,3);
-        g.fillRect(SCREEN_WIDTH - 18,0,3,SCREEN_HEIGHT - 8);
+        g.fillRect(0,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
+        g.fillRect(0,0,SCREEN_WIDTH - BORDER_WIDTH, BORDER_WIDTH);
+        g.fillRect(SCREEN_WIDTH - BORDER_WIDTH - 15,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
     }
 
     void drawBall(Graphics g)
@@ -61,10 +61,10 @@ public class DrawGame
                 if (bricks.getMap()[i][j] > 0)
                 {
                     g.setColor(Color.white);
-                    g.fillRect(j * bricks.getBrickWidth() + BRICKS_WIDTH, i * bricks.getBrickHeight() + BRICKS_HEIGHT, bricks.getBrickWidth(), bricks.getBrickHeight());
+                    g.fillRect(j * BRICKS_WIDTH + BRICKS_WIDTH, i * BRICKS_HEIGHT + BRICKS_HEIGHT, BRICKS_WIDTH, BRICKS_HEIGHT);
                     g.setStroke(new BasicStroke(5));
                     g.setColor(Color.black);
-                    g.drawRect(j * bricks.getBrickWidth() + BRICKS_WIDTH, i * bricks.getBrickHeight() + BRICKS_HEIGHT, bricks.getBrickWidth(), bricks.getBrickHeight());
+                    g.drawRect(j * BRICKS_WIDTH + BRICKS_WIDTH, i * BRICKS_HEIGHT + BRICKS_HEIGHT, BRICKS_WIDTH, BRICKS_HEIGHT);
                 }
             }
         }

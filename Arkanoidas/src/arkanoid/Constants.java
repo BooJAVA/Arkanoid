@@ -5,6 +5,8 @@ public class Constants
     public static final int SCREEN_WIDTH = 700;
     public static final int SCREEN_HEIGHT = 600;
 
+    public static final int BORDER_WIDTH = 3;
+
     public static final int PADDLE_Y = 550;
     public static final int PADDLE_WIDTH = 100;
     public static final int PADDLE_HEIGHT = 8;

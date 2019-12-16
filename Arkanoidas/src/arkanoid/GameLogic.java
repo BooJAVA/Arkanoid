@@ -1,7 +1,5 @@
 package arkanoid;
 
-import java.awt.*;
-
 import static arkanoid.Constants.*;
 
 public class GameLogic
@@ -76,35 +74,52 @@ public class GameLogic
         }
     }
 
-    public void checkBallBrickCollision()
-    {
-        for(int i = 0; i < bricks.getMapHeight(); i++)
-        {
-            for(int j = 0; j < bricks.getMapWidth(); j++)
-            {
-                if (bricks.getMap()[i][j] > 0)
+    public void checkBallBrickCollision() {
+        for (int i = 0; i < bricks.getMapHeight(); i++) {
+            for (int j = 0; j < bricks.getMapWidth(); j++) {
+                if (brickExists(i, j))
                 {
-                    int brickX = j * bricks.getBrickWidth() + BRICKS_WIDTH;
-                    int brickY = i * bricks.getBrickHeight() + BRICKS_HEIGHT;
-
-                    if (ball.getX() + BALL_RADIUS >= brickX && ball.getX() + BALL_RADIUS <= brickX + BRICKS_WIDTH + 10 &&
-                            ball.getY() + BALL_RADIUS >= brickY && ball.getY() + BALL_RADIUS <= brickY + BRICKS_HEIGHT + 10)
-                    {
-                        bricks.BrickIsDestroyed(i, j, true);
-                        countScore();
-
-                        if (ball.getX() + BALL_RADIUS <= brickX || ball.getX() >= brickX + bricks.getBrickWidth())
-                        {
-                            ball.invertXDir();
-                        } else {
-                            ball.invertYDir();
-                        }
-
-                    }
+                    checkCollision(i, j);
                 }
             }
         }
     }
+
+    public void checkCollision(int row, int col)
+    {
+        int brickX = col * BRICKS_WIDTH + BRICKS_WIDTH;
+        int brickY = row * BRICKS_HEIGHT + BRICKS_HEIGHT;
+
+        boolean ballCollideRight = ball.getX() + BALL_RADIUS >= brickX;
+        boolean ballCollideLeft = ball.getX() + BALL_RADIUS <= brickX + BRICKS_WIDTH + 15;
+        boolean ballCollideTop =  ball.getY() + BALL_RADIUS >= brickY;
+        boolean ballCollideBottom = ball.getY() + BALL_RADIUS <= brickY + BRICKS_HEIGHT + 15;
+
+        if (ballCollideRight && ballCollideLeft && ballCollideTop && ballCollideBottom)
+        {
+            bricks.BrickIsDestroyed(row, col, true);
+            invertBallAfterCollision(row, col);
+            countScore();
+        }
+
+    }
+
+    public void invertBallAfterCollision(int row, int col)
+    {
+        int brickX = col * BRICKS_WIDTH + BRICKS_WIDTH;
+        int brickY = row * BRICKS_HEIGHT + BRICKS_HEIGHT;
+        if (ball.getX() + BALL_RADIUS <= brickX || ball.getX() >= brickX + BRICKS_WIDTH)
+        {
+            ball.invertXDir();
+        } else {
+            ball.invertYDir();
+        }
+    }
+    public boolean brickExists(int row, int col)
+    {
+        return bricks.getMap()[row][col] == 1;
+    }
+
     public void countScore()
     {
         score += 10;

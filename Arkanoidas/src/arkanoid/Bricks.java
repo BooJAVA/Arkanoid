@@ -6,8 +6,6 @@ import java.awt.*;
 public class Bricks
 {
     private int[][] map;
-    private int brickWidth = BRICKS_WIDTH;
-    private int brickHeight = BRICKS_HEIGHT;
     private int AmountOfBricks = BRICKS_ROW * BRICKS_COL;
 
     public Bricks (int row, int col)
@@ -36,12 +34,6 @@ public class Bricks
     public int getMapHeight() { return map.length; }
 
     public int getMapWidth() { return map[0].length; }
-
-    public int getBrickWidth() { return brickWidth; }
-
-    public int getBrickHeight() {
-        return brickHeight;
-    }
 
     public int getAmountOfBricks() { return AmountOfBricks; }
 
