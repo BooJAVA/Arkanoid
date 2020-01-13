@@ -3,21 +3,29 @@ package arkanoid;
 class Rectangle extends GameObject
 {
 
-    int x;
-    int y;
-    int width;
-    int height;
+    double x;
+    double y;
+    double width;
+    double height;
 
-    double left() { return x; }
+    double left() {
+        return x;
+    }
 
-    double right() { return x + width; }
+    double right() {
+        return x + width;
+    }
 
-    double top() { return y; }
+    double top() {
+        return y - height / 2;
+    }
 
-    double bottom() { return y + height; }
+    double bottom() {
+        return y + height / 2;
+    }
 
-    public int getX() { return x; }
+    public double getX() { return x; }
 
-    public int getY() { return y; }
+    public double getY() { return x; }
 
 }

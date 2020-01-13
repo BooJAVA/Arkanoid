@@ -2,13 +2,14 @@ package arkanoid;
 
         import static arkanoid.Constants.SCREEN_HEIGHT;
         import static arkanoid.Constants.SCREEN_WIDTH;
+
         import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args)
     {
         JFrame game = new JFrame();
-        Gameplay gamePlay = Gameplay.getInstance();
+        Gameplay gamePlay = new Gameplay();
         game.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         game.setTitle("Arkanoid game");
         game.setResizable(false);

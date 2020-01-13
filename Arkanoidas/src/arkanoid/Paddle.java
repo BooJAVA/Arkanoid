@@ -1,4 +1,5 @@
 package arkanoid;
+import java.awt.*;
 
 import static arkanoid.Constants.*;
 

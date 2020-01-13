@@ -8,11 +8,11 @@ public class Ball extends GameObject
 {
     double x;
     double y;
-    int radius = BALL_RADIUS;
+    double radius = BALL_RADIUS;
     private int xDir = -1;
     private int yDir = -1;
 
-    public Ball (int x, int y)
+    public Ball (double x, double y)
     {
         this.x = x;
         this.y = y;
@@ -30,21 +30,19 @@ public class Ball extends GameObject
 
     public double getY() { return y; }
 
-    public void setX(double x) { this.x = x; }
+    public void setX(int x) { this.x = x; }
 
-    public void setY(double y) { this.y = y; }
+    public void setY(int y) { this.y = y; }
+
+    public void setyDir(int yDir) { this.yDir = yDir; }
 
     public int getxDir() { return xDir; }
-
-    public void setxDir(int xDir) { this.xDir = xDir; }
 
     public void invertXDir() { this.xDir *= -1; }
 
     public int getyDir() {
         return yDir;
     }
-
-    public void setyDir(int yDir) { this.yDir = yDir; }
 
     public void invertYDir() {
         this.yDir *= -1;

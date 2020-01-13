@@ -8,21 +8,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Gameplay extends JPanel implements KeyListener, ActionListener
 {
     private boolean play = false;
     private Timer timer;
 
-    private Bricks bricks = new Bricks(BRICKS_ROW, BRICKS_COL);
+    private List<Brick> bricks = new ArrayList<arkanoid.Brick>();
+    /*private Bricks bricks = new Bricks (50,50);*/
     private Ball ball = new Ball(SCREEN_WIDTH / 2 - BALL_RADIUS / 2, SCREEN_HEIGHT - 80);
     private Paddle paddle = new Paddle(SCREEN_WIDTH / 2 - PADDLE_WIDTH / 2);
     private DrawGame drawGame = new DrawGame(bricks, ball, paddle);
     private GameLogic gameLogic = new GameLogic(bricks, ball, paddle);
 
-    private static Gameplay instance = new Gameplay();
-
-    private Gameplay()
+    public Gameplay()
     {
         addKeyListener(this);
         setFocusable(true);
@@ -30,6 +31,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         timer = new Timer(BALL_VELOCITY, this);
         timer.start();
     }
+
+
 
     @Override
     public void paint(Graphics g)
@@ -54,9 +57,10 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
     {
         if (play)
         {
+            gameLogic.initializeBricks(bricks);
             gameLogic.moveBall();
-            gameLogic.checkBallPaddleCollision(paddle, ball);
-            gameLogic.checkBallBrickCollision();
+            gameLogic.testBallPaddleCollision(paddle, ball);
+            gameLogic.testBallBrickCollision(bricks, ball);
             repaint();
         }
     }
@@ -78,13 +82,16 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
         {
             play = true;
             gameLogic.movePaddleRight();
+
+
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT)
         {
             play = true;
             gameLogic.movePaddleLeft();
         }
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
+
+        /*if (e.getKeyCode() == KeyEvent.VK_ENTER)
         {
             if (!play)
             {
@@ -103,11 +110,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener
                     }
                 }
             }
-        }
-    }
+        }*/
 
-    public static Gameplay getInstance() {
-        return instance;
     }
 }
 

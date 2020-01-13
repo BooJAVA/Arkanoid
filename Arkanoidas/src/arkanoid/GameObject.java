@@ -1,6 +1,6 @@
 package arkanoid;
 
-abstract public class GameObject
+abstract class GameObject
 {
     abstract double left();
 

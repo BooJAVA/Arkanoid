@@ -2,97 +2,89 @@ package arkanoid;
 
 import static arkanoid.Constants.*;
 import java.awt.*;
+import java.util.List;
 
 public class DrawGame
 {
-    private Bricks bricks;
-    private Ball ball;
-    private Paddle paddle;
 
-    public DrawGame(Bricks bricks, Ball ball, Paddle paddle)
+    public DrawGame(List<Brick> bricks, Ball ball, Paddle paddle)
     {
-        this.bricks = bricks;
-        this.ball = ball;
-        this.paddle = paddle;
+
     }
 
-    public void drawAllElements(Graphics2D g, int score)
+    void drawAllElements(Graphics2D g, int score)
     {
         drawBackground(g);
         drawBorders(g);
         drawScore(g, score);
         drawBall(g);
-        drawBricks(g);
+        drawBrick(g);
         drawPaddle(g);
     }
 
-    private void drawBackground (Graphics g)
+    void drawBackground (Graphics g)
     {
         g.setColor(Color.black);
         g.fillRect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
-    private void drawBorders (Graphics g)
+    void drawBorders (Graphics g)
     {
         g.setColor(Color.yellow);
-        g.fillRect(0,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
-        g.fillRect(0,0,SCREEN_WIDTH - BORDER_WIDTH, BORDER_WIDTH);
-        g.fillRect(SCREEN_WIDTH - BORDER_WIDTH - 15,0, BORDER_WIDTH,SCREEN_HEIGHT - BORDER_WIDTH);
+        g.fillRect(0,0,3,SCREEN_HEIGHT - 8);
+        g.fillRect(0,0,SCREEN_WIDTH - 8,3);
+        g.fillRect(SCREEN_WIDTH - 18,0,3,SCREEN_HEIGHT - 8);
     }
 
-    private void drawBall(Graphics g)
+    void drawBall(Graphics g)
     {
         g.setColor(Color.green);
         g.fillOval((int) ball.getX(),(int) ball.getY(), BALL_RADIUS, BALL_RADIUS);
     }
 
-    private void drawPaddle (Graphics g)
+    void drawPaddle (Graphics g)
     {
         g.setColor(Color.green);
         g.fillRect((int) paddle.getX(), PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
 
-    private void drawBricks(Graphics2D g)
+    void drawBrick(Graphics2D g)
     {
-        for (int i = 0; i < bricks.getMapHeight(); i++)
+
+        brick.drawBrick(g);
+
+    }
+    void drawBricks(List<Brick> bricklist, Graphics g)
+    {
+        for (Brick bricks : bricklist)
         {
-            for (int j = 0; j < bricks.getMapWidth(); j++)
-            {
-                if (bricks.getMap()[i][j] > 0)
-                {
-                    g.setColor(Color.white);
-                    g.fillRect(j * BRICKS_WIDTH + BRICKS_WIDTH, i * BRICKS_HEIGHT + BRICKS_HEIGHT, BRICKS_WIDTH, BRICKS_HEIGHT);
-                    g.setStroke(new BasicStroke(5));
-                    g.setColor(Color.black);
-                    g.drawRect(j * BRICKS_WIDTH + BRICKS_WIDTH, i * BRICKS_HEIGHT + BRICKS_HEIGHT, BRICKS_WIDTH, BRICKS_HEIGHT);
-                }
-            }
+            bricks.drawBrick(g);
         }
     }
 
-    private void drawScore (Graphics g, int score)
+    void drawScore (Graphics g, int score)
     {
         g.setColor(Color.green);
-        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
-        g.drawString(""+score, SCORE_TEXT_X, SCORE_TEXT_Y);
+        g.setFont(new Font(FONT, Font.BOLD, 25));
+        g.drawString(""+score, 590, 30);
     }
 
-    public void drawGameOver (Graphics g, int score)
+    void drawGameOver (Graphics g, int score)
     {
         g.setColor(Color.red);
-        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
-        g.drawString("Game over! Score : "+score, TEXT_X, TEXT_Y);
-        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
-        g.drawString("Press ENTER to play again", ENTER_TEXT_X, ENTER_TEXT_Y);
+        g.setFont(new Font(FONT, Font.BOLD, 30));
+        g.drawString("Game over! Score : "+score, 200, 300);
+        g.setFont(new Font(FONT, Font.BOLD, 30));
+        g.drawString("Press ENTER to play again", 170, 340);
     }
 
-    public void drawGameWon (Graphics g, int score)
+    void drawGameWon (Graphics g, int score)
     {
         g.setColor(Color.red);
-        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
-        g.drawString("You won! Score : "+score, TEXT_X, TEXT_Y);
-        g.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
-        g.drawString("Press ENTER to play again", ENTER_TEXT_X, ENTER_TEXT_Y);
+        g.setFont(new Font(FONT, Font.BOLD, 30));
+        g.drawString("You won! Score : "+score, 200, 300);
+        g.setFont(new Font(FONT, Font.BOLD, 30));
+        g.drawString("Press ENTER to play again", 170, 340);
     }
 
 

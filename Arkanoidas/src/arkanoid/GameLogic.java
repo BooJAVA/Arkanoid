@@ -1,136 +1,159 @@
 package arkanoid;
 
+import java.awt.*;
+import java.util.List;
+
 import static arkanoid.Constants.*;
 
 public class GameLogic
 {
     public int score = 0;
 
-    private Bricks bricks;
+    private Brick brick;
     private Ball ball;
     private Paddle paddle;
 
-    public GameLogic(Bricks bricks, Ball ball, Paddle paddle)
+    public GameLogic(Brick bricks, Ball ball, Paddle paddle)
     {
-        this.bricks = bricks;
+        this.brick = bricks;
         this.ball = ball;
         this.paddle = paddle;
     }
 
+    void initializeBricks(List<Brick> bricks)
+    {
+        bricks.clear();
+        for (int i = 0; i < BRICKS_ROW; i++)
+        {
+            for (int j = 0; j < BRICKS_COL; j++)
+            {
+                bricks.add(new Brick((i + 1) * (BRICKS_WIDTH + 3) + 22,(j + 2) * (BRICKS_HEIGHT + 3) + 20));
+            }
+        }
+    }
+
     public void movePaddleRight()
     {
-        if (paddle.right() >= SCREEN_WIDTH - PADDLE_VELOCITY)
+        if (paddle.getX() >= 590)
         {
-            paddle.setX(SCREEN_WIDTH - PADDLE_WIDTH);
-        }
-        if (paddle.right() < SCREEN_WIDTH)
+            paddle.setX(590);;
+        } else
         {
-            paddle.setX(paddle.getX() + PADDLE_VELOCITY);
+            paddle.setX((int) paddle.getX() + PADDLE_VELOCITY);
         }
     }
 
     public void movePaddleLeft()
     {
-        if (paddle.left() <= PADDLE_VELOCITY)
+        if (paddle.getX() <= 3)
         {
-            paddle.setX(0);
-        }
-        if (paddle.left() > PADDLE_VELOCITY)
+            paddle.setX(3);
+        } else
         {
-            paddle.setX(paddle.getX() - PADDLE_VELOCITY);
+            paddle.setX((int) paddle.getX() - PADDLE_VELOCITY);
         }
     }
 
     public void moveBall()
     {
-        if (ball.getX() <= 0)
+        ball.setX((int) ball.getX() + ball.getxDir());
+        ball.setY((int) ball.getY() + ball.getyDir());
+        if (ball.getX() < 0)
         {
             ball.invertXDir();
         }
-        if (ball.getY() <= 0)
+        if (ball.getY() < 0)
         {
             ball.invertYDir();
         }
-        if (ball.getX() >= SCREEN_WIDTH - BALL_RADIUS)
+        if (ball.getX() > 665)
         {
             ball.invertXDir();
         }
-        ball.setX((int) ball.getX() + ball.getxDir());
-        ball.setY((int) ball.getY() + ball.getyDir());
+
+
+        /*if (ball.intersects(paddle))
+        {
+            ball.invertYDir();
+        }*/
     }
 
-    private boolean isIntersecting(GameObject objectA, GameObject objectB)
+    boolean isIntersecting(GameObject objectA, GameObject objectB)
     {
-        return objectA.right() >= objectB.left() && objectA.left() <= objectB.right()
-                && objectA.bottom() >= objectB.top() && objectA.top() <= objectB.bottom();
+        return objectA.right() > objectB.left() && objectA.left() < objectB.right()
+                && objectA.bottom() > objectB.top() && objectA.top() < objectB.bottom();
     }
 
-    void checkBallPaddleCollision(Paddle paddle, Ball ball) {
+    void testBallPaddleCollision(Paddle paddle, Ball ball) {
         if (isIntersecting(paddle, ball))
         {
             ball.invertYDir();
         }
     }
 
-    public void checkBallBrickCollision() {
-        for (int i = 0; i < bricks.getMapHeight(); i++) {
-            for (int j = 0; j < bricks.getMapWidth(); j++) {
-                if (brickExists(i, j))
+    void testBallBrickCollision(Brick bricks, Ball ball)
+    {
+
+        if (!isIntersecting(brick, ball))
+            return;
+
+            brick.BrickIsDestroyed(true);
+            countScore();
+
+
+
+            if (ball.right() < brick.left() || ball.left() > brick.right()) {
+                ball.invertXDir();
+            } else {
+                ball.invertYDir();
+            }
+
+
+    }
+
+    /*public void checkCollision()
+    {
+        for(int i = 0; i < bricks.getMapHeight(); i++)
+        {
+            for(int j = 0; j < bricks.getMapWidth(); j++)
+            {
+                if (bricks.getMap()[i][j] > 0)
                 {
-                    int brickX = j * BRICKS_WIDTH + BRICKS_WIDTH;
-                    int brickY = i * BRICKS_HEIGHT + BRICKS_HEIGHT;
-                    checkCollision(i, j, brickX, brickY);
+                    int brickX = j * bricks.getBrickWidth() + 80;
+                    int brickY = i * bricks.getBrickHeight() + 50;
+                    Rectangle brickRect = new Rectangle(brickX, brickY, bricks.getBrickWidth(), bricks.getBrickHeight());
+
+                    if (ball.intersects(brickRect))
+                    {
+                        bricks.BrickIsDestroyed(i, j, true);
+                        countScore();
+
+                        if (ball.getX() + 19 <= brickRect.x || ball.getX() + 1 >= brickRect.x + bricks.getBrickWidth())
+                        {
+                            ball.invertXDir();
+                        } else {
+                            ball.invertYDir();
+                        }
+
+                    }
                 }
             }
         }
     }
-
-    private boolean brickExists(int row, int col)
-    {
-        return bricks.getMap()[row][col] == 1;
-    }
-
-    private void checkCollision(int row, int col, int brickX, int brickY)
-    {
-        boolean overlapRight = ball.getX() + BALL_RADIUS >= brickX;
-        boolean overlapLeft = ball.getX() + BALL_RADIUS <= brickX + BRICKS_WIDTH + 15;
-        boolean overlapTop =  ball.getY() + BALL_RADIUS >= brickY;
-        boolean overlapBottom = ball.getY() + BALL_RADIUS <= brickY + BRICKS_HEIGHT + 15;
-
-        if (overlapRight && overlapLeft && overlapTop && overlapBottom)
-        {
-            bricks.BrickIsDestroyed(row, col, true);
-            invertBallAfterCollision(row, col, brickX, brickY);
-            countScore();
-        }
-
-    }
-
-    private void invertBallAfterCollision(int row, int col, int brickX, int brickY)
-    {
-        boolean collideRight = ball.getX() + BALL_RADIUS <= brickX;
-        boolean collideLeft = ball.getX() + BALL_RADIUS >= brickX + BRICKS_WIDTH + 15;
-        if (collideRight || collideLeft)
-        {
-            ball.invertXDir();
-        } else {
-            ball.invertYDir();
-        }
-    }
-
-    private void countScore()
+*/
+    public void countScore()
     {
         score += 10;
     }
 
     public boolean isGameOver()
     {
-        return ball.getY() > SCREEN_HEIGHT - BALL_RADIUS;
+        return ball.getY() > 570;
     }
 
     public boolean isGameWon()
     {
-        return bricks.getAmountOfBricks() <= 0;
+        return brick.getAmountOfBricks() <= 0;
     }
 
     public void setScore(int score)
